@@ -1,0 +1,412 @@
+﻿Working with Linux CLI:
+=======================
+[student@hostX Desktop] $ 
+[root@hostX    Desktop] # 
+  1       2        3    4 
+ 
+ 	1: user name
+ 	2: hostname
+	3: user's current location
+	4: user types (root: #, regular user: $)
+
+Linux User's Types:
+-------------------
+ => root user: Administrator (#)
+ => system user: service (mail/ftp/ssh/daemons)-cannot login 
+ => regular user: student, guest, sakib ($)
+
+Working with Linux Shells & Terminal:
+------------------------------------
+ User -> Keyboard -> Terminal/Application -> Shell -> Kernel -> Hardware
+           Screen <- Terminal/Application <- Shell <- Kernel <- Hardware
+
+ Types of Linux Shell:
+ ---------------------
+ => sh
+ => Bash  (commonly used) 
+ => cshell
+ => tcshell
+ => kshell 
+
+বর্তমানে কোন শেল ব্যবহার হচ্ছে এবং আমাদের সিস্টেমে কি কি শেল ইন্সটল আছে সেটা জানার জন্য নিচের কমান্ডঃ 
+
+[student@hostX Desktop] $ echo $SHELL
+[student@hostX Desktop] $ chsh -l
+ /bin/sh
+ /bin/bash
+ /usr/bin/sh
+ /usr/bin/bash
+
+Working with linux CLI:
+-----------------------
+ => Physical Consoles (Alt + Ctrl+ F1 - Alt + Ctrl + F6) 
+	=> Alt + Ctrl + F1/F2: GUI
+	=> Alt + Ctrl + F3-F6: CMD  (tty)
+
+ Alt + Ctrl + F1 = GNOME Shell  (Activities)
+ Alt + Ctrl + F2 = GNOME Classic Shell (Application/Start Menu)
+
+ => Pseudo Consoles (/dev/pts/x)a or connection from GUI Terminal or Remote Terminal
+ => Telnet (unencrypted, TCP port 23)
+ => SSH (encrypted, TCP Port 22)
+
+ Alt + Ctrl + F1 => GUI                       - :0
+ Alt + Ctrl + F3 => new CMD terminal (F2-F6)  - tty2-tty6
+
+ => Press Ctl + Alt + F3
+ 
+ Login: student
+ pass: ****** 
+
+ [student@hostX Desktop]$ su 
+  Password: ******
+
+ [root@hostX ~]# exit 
+ [student@hostX ~]$ exit
+
+ screen:
+ ------
+ $ ctrl + l = srceen clear
+ $ ctrl + shift + "t" => new terminal (tab) (GUI)
+
+Linux Command Syntax/Pattern:
+-----------------------------
+প্রতিটি কমান্ড লাইন ইন্টারফেস ভিত্তিক অপারেটিং সিস্টেম বা ডিভাইসে কমান্ড লাইন ইন্টারফেস নিয়ে কাজ করতে গেলে, প্রতিটা কমান্ডের
+০৩ (তিন) টা পার্ট থাকে। প্রথম টা হচ্ছে কমান্ড, যেটা দিতেই হবে এবং শেষের টা হচ্ছে আর্গুমেন্ট। কিছু কিছু কমান্ড আর্গুমেন্ট ছাড়াই কাজ 
+করে আবার কিছু কিছু কমান্ড আর্গুমেন্ট ছাড়া কাজ করবেই না। আবার অনেক কমান্ডে আমরা কমান্ডের সাথে অপশন ব্যবহার করে থাকি।
+একটা কমান্ডের সাথে নানা রকম অপশন ব্যবহার করা যায়। নিচের একটা কমান্ডের ০৩ (তিন) টা পার্ট দেখানো হয়েছেঃ 
+
+    # command [optoin (-)] argument
+
+ ex # ping -c 4 127.0.0.1
+    # date
+    # cal
+    
+ # ping --help 
+
+উপরে দেখতে পাচ্ছি এখানে একটা সম্পূর্ণ কমান্ডের সাথে, কমান্ড, অপশন এবং আর্গুমেন্ট সবই ব্যবহার করা হয়েছে। এখানে 'ping' হচ্ছে
+কমান্ড, '-c 4' হচ্ছে অপশন এবং '127.0.0.1' হচ্ছে আর্গুমেন্ট। এই কমান্ডে শুধু 'ping' লিখে এন্টার চাপলে কাজ করবে না।
+কারণ 'ping' কাকে করবেন এইজন্য অবশ্যই আর্গুমেন্ট ব্যবহার করতে হবে। 
+
+একটা কমান্ডের সাথে অপশন ব্যবহার করে কিভাবে বিভিন্ন আউটপুট পাওয়া যায়, তার একটা উদাহরণ নিচে দেওয়া হয়েছে। এখানে 'ls'
+কমান্ডের সাথে '-l,-i,-a,-h' নানা অপশন ব্যবহার করে নানা ধরণের আউটপুট পাওয়া যাবে। পাশাপাশি আমরা চাইলে একসাথে
+সবগুলা অপশন ব্যবহার করতে পারি। 
+
+[student@hostX Desktop]$ cd 
+[student@hostX ~]$ ls       ; list of files and dir of current directoy
+[student@hostX ~]$ ls -l    ; long list with properties
+[student@hostX ~]$ ls -li   ; Files and directory inode 
+[student@hostX ~]$ ls -la   ; details list with hidden files and dir
+[student@hostX ~]$ ls -lh   ; human readable
+[student@hostX ~]$ ls -laih ; all 
+
+উপরে 'ls' কমান্ডের সাথে ব্যবহৃত অপশন সমূহের বিস্তারিত নিচে আলাপ করা হয়েছেঃ
+
+ -l = list  (লম্বা লিস্ট বা বিস্তারিত দেখার জন্য এই অপশন টা ব্যবহার করা হয়) 
+ -i = inode (প্রতিটি ফাইল/ডিরেক্টরির একটা ইন্ডেক্সিং নাম্বার থাকে যেটাকে বলা হয়ে আইনোড (inode), এটা মূলত সব ফাইলের আলাদা আলাদা।) 
+ -a = all   (এই অপশন ব্যবহার করলে বর্তমান ডিরেক্টরির মধ্যের সকল লুকায়িত (Hidden) ফাইল দেখা  যাবে। )
+ -h = human readble (ফাইলের সাইজ সাধারনত বাইট আকারে দেখায়। এই অপশন ব্যবহার করলে Kilo, Mega, Giga আকারে দেখাবে।)
+ 
+ ** আর যদি সবগুলা অপশন একসাথে ব্যবহার করা হয়, তাহলে সবগুলা অপশনের আউটপুট একসাথে দেখাবে।  
+
+লিনাক্স ফাইল/ডিরেক্টরির কালার কোডঃ
+-------------------------
+লিনাক্স ভিত্তিক অপারেটিং সিস্টেমে অধিকাংশ কাজ কমান্ড লাইনেই করতে হবে। গ্রাফিক্যাল এনভায়রনমেন্টে কাজ করার সময় আমরা বিভিন্ন
+ফাইল/ডিরেক্টরির আইকন দেখে আমরা একটা ধারণা পাওয়া যায় কোনটা কি ধরণের ফাইল বা ডিরেক্টরি। কিন্ত কমান্ড লাইন ইন্টারফেস নিয়ে
+কাজ করার সময়ে আসলে সব কিছুই টেক্সট হিসেবে দেখা যায়। এইজন্য কোনটা কি ধরণের ফাইল বা ডিরেক্টরি এটা বাছাই করা একটু চ্যালেঞ্জ।
+কিন্ত আমরা চাইলে কিছু কালার কোডের মাধ্যেমে লিনাক্সের বিভিন্ন ফাইল/ডিরেক্টরি চিনতে পারি, নিচে সেগুলার একটা লিস্ট দেওয়া হয়েছেঃ 
+
+      Blue - Directory  
+      B&w - File (text, pdf, ppt) 
+      Red - compress (rpm/zip/rar)
+      Green - execute file (script)
+      Yellow - device (terminal/cd/dvd/usb/hdd)
+      Cyan - link file/audio
+      Magenta - Picture/image/video
+
+[student@hostX ~]$ pwd   ; present working directory
+
+  "~" 	  => Home dir (root/regular user) 
+  "/" 	  => root partition (/) (My Computer)
+  "/root" => root's home dir
+  "/home" => Regular user's home directory 
+    i.e.: /home/student
+
+[student@hostX ~]$ => user's home dir 
+
+Working with some Linux command accross all linux distribution:
+---------------------------------------------------------------
+[student@hostX ~]$ w                           ; who are currently loggin (Details)
+[student@hostX ~]$ who                         ; who are currently loggin (shotr)
+[student@hostX ~]$ whoami 
+[student@hostX ~]$ hostname
+[student@hostX ~]$ tty
+[student@hostX ~]$ date
+[student@hostX ~]$ cal 
+[student@hostX ~]$ cal 2021
+[student@hostX ~]$ runlevel                       ;(5-GUI, 3-CMD, n-none)
+[student@hostX ~]$ uname -r       	  	  ; kernel version
+[student@hostX ~]$ uname        		  ; OS name
+[student@hostX ~]$ cat /etc/redhat-release        ; redhat/centos version
+[student@hostX ~]$ top			          ; task manager
+[student@hostX ~]$ lastlog			  ; login details
+[student@hostX ~]$ free -m			  ; RAM Info
+[student@hostX ~]$ uptime			  : system UPtiem info
+[student@hostX ~]$ ifconfig			  ; IP Address Info
+
+[student@hostX ~]$ history  			; list of privious command
+[student@hostX ~]$ !25			; 45 no command
+[student@hostX ~]$ history -c 		; clear all previous history
+[student@hostX ~]$ history
+
+ Shutdown
+ --------
+[root@hostX ~]# init 0
+[root@hostX ~]# poweroff
+[root@hostX ~]# shutdown -h now      ; 'h' = halt
+[root@hostX ~]# shutdown -h 5 now    ; shutdown after 5 min
+
+restart:
+--------
+[root@hostX ~]# reboot
+[root@hostX ~]# init 6
+[root@hostX ~]# shutdown -r now	     ; '-r' = reboot
+[root@hostX ~]# shutdown -r 5 now    ; reboot after 5 min
+   
+Linux Directory Structure:
+-------------------------
+[student@hostX ~]$ cd /
+[student@hostX /]$ ls
+
+backup  boot  etc   lib    media  opt   root  sbin  sys  usr
+bin     dev   home  lib64  mnt    proc  run   srv   tmp  var
+
+ /bin - Binary Files (যে সকল কমান্ড গুলা রেগুলার ইউজার কতৃক রান করা হয়), যেমনঃ ls, cd, pwd, who, cal, date etc. 
+ 
+ /boot - system boot related file (Kernel, boot loader)
+ 
+ /dev - সিস্টেমের সকল ডিভাইস টাইপের ফাইল গুলা এখানে থাকে। যেমনঃ dvd, HDD, Printer, Terminal, Serial/Prallel Devices. 
+
+ /etc - সকল সিস্টেম এবং সার্ভার কনফিগারেশন ফাইল। ইউজার/গুরুপ ডাটাবেজ, সিস্টেম কনফিগারেশন, সার্ভার কনফিগারেশন, প্রোফাইল, সিকিউরিটি। 
+
+ /home - সকল রেগুলার ইউজারদের হোম ডিরক্টরি। যেমনঃ student, tamim, sumon (FTP, Email, File সার্ভার ইউজার)। 
+
+ /lib - system libary files locations. libraries needed to execute the binaries in /bin/ and /sbin/. 
+
+ /media - system defaut mount point (DVD/ISO/SOFTware)
+
+ /mnt - mount point (DVD/HDD/USB/Network Share)
+ 
+ /opt - optional (empty)
+
+ /proc - Also called 'proFS' system process related info (CPU, RAM, Process, Driver, Modules and Kernel)
+
+ /root - root user (superuser) home dir.
+
+ /run - service running data. Runtime data for processes started since the last boot.  
+
+ /sbin  - System Binary Files (যে সকল কমান্ড গুলা root ইউজার কতৃক রান করা হয়), যেমনঃ init, poweroff, fdisk, reboot. 
+
+ /srv - Sort for Service. User's (/home/*) service related data. Like WWW, FTP, Email etc.
+
+ /sys - Sort for system. '/sys' directory as a virtual filesystem (sysfs) mounted under /sys. similar as proc.
+ 
+ /tmp - temporary files (deleted after 10 days)
+
+ /usr - thirdparty software install location
+ 
+ /var - varibale file (mail/log/hosting/ftpdata)
+
+[student@hostX ~]$ cd  [enter]  ; back to home dir
+[student@hostX ~]$ cd /
+[student@hostX /]$ ls
+[student@hostX /]$ cd
+
+        =>  cd  /dir1/dir2/dir3      ; Linux Directory Path
+
+	=>  C:\dir1\dir2\dir3>       ; Windows Directory Path
+
+[student@hostX ~]$ cd /var/spool/mail
+[student@hostX mail]$ ls
+[student@hostX mail]$ cd  ..            ; এক ধাপ পিছনের (Parent) ডিরেক্টরিতে যাওয়ার কমান্ড। 
+[student@hostX spool]$ cd  -            ; back to previous dir
+[student@hostX mail]$ cd
+[student@hostX ~]$ ls
+[student@hostX ~]$ cd Music
+[student@hostX Music]$ cd ../Videos
+[student@hostX Videos]$ ls
+[student@hostX Videos]$ pwd
+
+[student@hostX Videos]$ cd 
+[student@hostX ~]$ mkdir linux21
+[student@hostX ~]$ ls
+[student@hostX ~]$ cd linux21
+[student@hostX linux21]$ ls
+[student@hostX linux21]$ pwd
+[student@hostX linux21]$ mkdir day4
+[student@hostX linux21]$ cd day4
+[student@hostX day4]$ ls
+[student@hostX day4]$ pwd
+
+Test: Graphically (home/...........)
+
+ class work:
+ -----------
+[student@hostX day4]$ touch file1                ; ফাইল তৈরির জন্য 'touch' ব্যবহার করা হয়। 
+[student@hostX day4]$ ls                         ; ফাইল দেখার জন্য 'ls' কমান্ড
+  file1
+
+[student@hostX day4]$ touch file2 file3 file4    ; একাধিক ফাইল একসঙ্গে তৈরি করার কমান্ড। 
+[student@hostX day4]$ ls		                        ; ফাইল গুলা দেখার জন্য 'ls' কমান্ড
+[student@hostX day4]$ mkdir dir1 dir2 dir3       ; এক কমান্ডের মাধ্যমে একাধিক ডিরেক্টরি তৈরি করার কমান্ড। 
+[student@hostX day4]$ ls			   ;  আউপুট দেখার জন্য 'ls' কমান্ড
+[student@hostX day4]$ touch doc{1..10}           ; দশটি (১০) ফাইল সিরিয়ালি তৈরি করার কমান্ড। 
+[student@hostX day4]$ ls			   ;  আউপুট দেখার জন্য 'ls' কমান্ড
+[student@hostX day4]$ touch soft{1..10}.exe      ; ফাইল তৈরি সাথে Extension সহ। 
+[student@hostX day4]$ ls			   ;  আউপুট দেখার জন্য 'ls' কমান্ড
+[student@hostX day4]$ touch file{5,6,7}          ; ভ্যারিয়েবল ব্যবহার করে ফাইল তৈরির কমান্ড। 
+[student@hostX day4]$ ls			   ;  আউপুট দেখার জন্য 'ls' কমান্ড
+[student@hostX day4]$ touch file{a,b,c}          ; ভ্যারিয়েবল ব্যবহার করে ফাইল তৈরির কমান্ড। 
+[student@hostX day4]$ ls			   ;  আউপুট দেখার জন্য 'ls' কমান্ড
+[student@hostX day4]$ mkdir -p dir1/linux/redhat ; ডিরেক্টরি পাথ তৈরির কমান্ড। 
+[student@hostX day4]$ ls dir1                    ; 'dir1' এর কন্টেন্ট দেখার কমান্ড। 
+ linux
+[student@hostX day4]$ touch dir1/linux/centos    ; ডিরেক্টরি পাথে ফাইল তৈরি কমান্ড। 
+[student@hostX day4]$ cd dir1/linux/		    ;  ডিরেক্টরি পাথে প্রবেশ করার জন্য। 
+[student@hostX linux]$ pwd			   ; আমরা কোথায় অবস্থান করিছি সেটা দেখার কমান্ড। 
+  /home/student/linux21/day4/dir1/linux
+
+[student@hostX linux]$ ls  			   ; বর্তমান ডিরেক্টরির মধ্যে কি আছে সেটা দেখার জন্য। 
+  centos  redhat 	
+[student@hostX linux]$ cd /home/student/linux21/day4  ; রুট পার্টিশন (/) হয়ে 'day4' ডিরেক্টরিতে প্রবেশ করার জন্য। 
+
+or
+
+[student@hostX linux]$ cd ../../         ; দুই ধাপ পিছনে (Parent) ডিরেক্টরিতে যাওয়ার কমান্ড। 
+[student@hostX day4]$ rm -rf *           ; বর্তমান ডিরেক্টরির সকল ফাইল/ডিরেক্টরি কনটেন্ট রিমুভ করার জন্য। 
+[student@hostX day4]$ ls                 ; কিছু আছে কিনা দেখার জন্য। 
+
+Working with Hidden file/dir:
+----------------------------
+[student@hostX day4]$ mkdir  .training
+[student@hostX day4]$ touch  .csl
+[student@hostX day4]$ ll
+[student@hostX day4]$ ls -la   ; a for hidden file/dir
+[student@hostX day4]$ mv .training training	 ; file rename
+[student@hostX day4]$ ll
+
+[student@hostX day4]$ touch file1
+[student@hostX day4]$ mkdir dir1
+
+[student@hostX day4]$ ll
+
+ d rwx rwx  r-x .  2   student student   6 	Feb  4 18:06 	dir1
+ - rw- rw-  r-- .  1   student student   0 	Feb  4 18:06 	file1
+
+ 1 2a  2b   2c 2d  3      4      5       6 	    7	          8
+
+ 1: file/dir types
+ 2: file/dir permission:   2a: user permission, 2b: group permission, 2c: others permission 2d: ACL Permission
+ 3: file/dir link (Hard Link)
+ 4: file/dir owner
+ 5: file/dir group owner
+ 6: file/dir size (byte)
+ 7: file/dir modify date
+ 8: file/dir name
+
+ FIle/dir Permission:
+ ---------------------------
+ r = read
+ w = write
+ x = execute
+ - = no permission
+ . = ACL File Permission (+)
+
+Linux FIle & Dir types:
+-----------------------  
+ d = Directory         : Regular directory
+ l = Link file         : $ ls -l /dev/stdin (softlink/symbolik link)
+ s = Socket            : $ ls -l /dev/log     
+ - = Regular file      : text/any file
+ p = Pipe file         : $ ls -l /dev/initctl        
+ b = Device CD/DVD/HDD : $ ls -l /dev/sdb, /dev/sr0
+ c = Character device  : serial/prallel/printer(lp)/tty
+
+s - A socket file is used to pass information between applications/process for communication purpose
+
+[student@hostX day4]$ cd /dev
+[student@hostX dev]$ ll
+[student@hostX dev]$ cd -  
+[student@hostX day4]$ cd /run
+[student@hostX run]$ ll
+[student@hostX run]$ cd -
+[student@hostX day4]$ 
+
+Copy/Paste/Remove/Rename/Delete
+===============================
+[student@hostX day4]$ ls
+ file1 dir1
+[student@hostX day4]$ cp file1 file2                ; ফাইল কপি করার জন্য 'cp' কমান্ড ব্যবহার করা হয়। 
+[student@hostX day4]$ ls
+[student@hostX day4]$ cp file1 /home/student        ; ফাইল কপি করে অন্য লোকেশনে '/home/student' একই নামে। 
+[student@hostX day4]$ cp file1 /home/student/file3  ; ফাইল কপি করে অন্য লোকেশনে '/home/student' অন্য নামে।  
+[student@hostX day4]$ cd /home/student
+[student@hostX ~]$ ls
+file1
+file3
+[student@hostX ~]$ cd -
+[student@hostX day4]$ cp /etc/passwd  .     ; অন্য লোকেশন থেকে ফাইল কপি করে বর্তমান ডিরেক্টরির (.) মধ্যে আনার কমান্ড। 
+[student@hostX day4]$ ls                    ; কপি হয়ে আসছে কিনা সেটা দেখার জন্য। 
+[student@hostX day4]$ cp /etc/hostname  /home/student  ; ফাইল এক লোকেশন থেকে কপি করে অন্য লোকেশনে পাঠানোর কমান্ড।  
+[student@hostX day4]$ cd /home/student
+[student@hostX ~]$ ls
+[student@hostX ~]$ cd -
+[student@hostX day4]$ cp dir1 dir99      ; wrong command
+[student@hostX day4]$ cp -r dir1 dir99   ; ডিরেক্টরি কপি করার জন্য অবশ্যই 'cp -r' ব্যবহার করতে হবে। 
+[student@hostX day4]$ cp -r /etc .       ; '/etc' ফুল ডিরেক্টরি কপি করে বর্তমান ডিরেক্টরির (.) মধ্যে আনার কমান্ড। 
+[student@hostX day4]$ ls 
+[student@hostX day4]$ mv file2 file4     ; 'mv' কমান্ড দিয়ে ফাইল 'file2' কে 'file4' নামে পরিবর্তন করা হয়েছে। 
+[student@hostX day4]$ ls 
+[student@hostX day4]$ mv file4 /home/student     ; ফাইল মুভ (cut) করে অন্য লোকেশনে নিয়ে যাওয়া। 
+[student@hostX day4]$ ls
+[student@hostX day4]$ rm file1            ; ফাইল মুছে ফেলার জন্য 'rm' কমান্ড। 
+[student@hostX day4]$ ls
+[student@hostX day4]$ rm dir99        ; wrong command
+[student@hostX day4]$ rm -r dir99     ; ডিরেক্টরি রিমুভ করার জন্য অবশ্যই '-r' ব্যবহার করতে হবে। 
+[student@hostX day4]$ rm -r etc       ; সম্পূর্ণ ডিরেক্টরি রিমুভ করার জন্য প্রতিবার 'y' অপশন প্রেস করে কনফার্ম করতে হবে। 
+ C^                                   
+
+ 'Ctrl + C' প্রেস করে, ফাইল রিমুভ বিরত রাখতে পারি। 
+
+[student@hostX day4]$ rm -rf etc      ; প্রতিবার 'y' প্রেস করার পরিবর্তে '-rf' ব্যবহার করলে, একসঙ্গে সকল ফাইল/ডিরেক্টরি মুছবে। 
+[student@hostX day4]$ ls              ; 'etc' ডিরেক্টরি আছে কিনা দেখার জন্য। 
+[student@hostX day4]$ rm -rf * 	               ; বর্তমান ডিরেক্টরির সকল ফাইল/ডিরেক্টরি কনটেন্ট রিমুভ করার জন্য। 
+[student@hostX day4]$ ls
+
+ ===================== The End =======================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
